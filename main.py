@@ -11,7 +11,7 @@ library.clear()
 
 def add_book(title, author, year):
     if title in library.keys():
-        if input('Книга с таким названием существует, обновить сведения о ней?(да/нет)').lower() in ('yes', 'да'):
+        if input('Книга с таким названием существует!\nОбновить сведения о ней?(да/нет)\n').lower() in ('yes', 'да'):
             library[title] = {'author': author, 'year': year, 'availability': None}
     else:
         library[title] = {'author': author, 'year': year, 'availability': None}
