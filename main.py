@@ -9,7 +9,7 @@ library.clear()
 add_book_query = 'Книга с таким названием существует!\nВыберите дальнейшее действие введя цифру:\n'
 aad_book_action = ['1. Обновить информацию о книге',
                    '2. Не вносить изменения',
-                   '3. Показать информацию о книге (в разработке)']
+                   '3. Показать информацию о книге']
 library_management_query = 'Необходимо выбрать действие введя его цифру:\n'
 library_management_action = ['1. Добавить книгу в каталог (обновить информацию о книге)',
                              '2. Удалить книгу из каталога',
@@ -22,7 +22,7 @@ issue_return_book_action = ['1. Выдать книгу на руки',
                             '3. Вернуться в предыдущее меню']
 
 
-def choice_book_title_answer_year():
+def input_book_title_answer_year():
     print('Раздел добавления (обновления) книги в каталог')
     title = ''
     author = ''
@@ -125,7 +125,7 @@ def library_management():
     print('*' * 100 + '\nТерминал библиотекаря\nУчетная запись № 000-217/2F\n')
     choice = choice_of_answer(library_management_query, library_management_action)
     if choice == '1':
-        add_book(choice_book_title_answer_year())
+        add_book(input_book_title_answer_year())
     elif choice == '2':
         remove_book()
     elif choice == '3':
