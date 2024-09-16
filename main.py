@@ -50,31 +50,39 @@ def return_book(title):
     input('Для продолжения работы нажмите ввод (enter)\n')
 
 
-def find_book(title, in_another_def):
-    if not in_another_def:
-        system('cls||clear')
-        print('\nРаздел поиска книги в каталоге\n')
-        title = input('Введите название книги:\n')
-    if title in library.keys():
-        # if library[title]["availability"] is None:
-        # status = 'Книга в библиотеке, но ее статус не определен'
-        # if library[title]["availability"]:
-        # status = 'Книга доступна'
-        # else:
-        # status = 'Книга выдана'
-        print(f'\nКнига: "{title}"\t'
-              f'Автор: {library[title]["author"]}\t'
-              f'Год издания: {library[title]["year"]}\t')
-        # f'Статус: {status}')
-        if not in_another_def:
-            input('\nДля продолжения работы нажмите ввод (enter)\n')
+def issue_and_return_book(title):
+    choice = choice_of_answer(issue_return_book_query, issue_return_book_action)
+    if choice == '1':
+        issue_book(title)
+    elif choice == '2':
+        return_book(title)
 
-        if not in_another_def:
-            choice = choice_of_answer(issue_return_book_query, issue_return_book_action)
-            if choice == '1':
-                issue_book(title)
-            elif choice == '2':
-                return_book(title)
+
+def status_of_book(title):
+    if library[title]["availability"] is None:
+        return 'Книга в библиотеке, но ее статус не определен'
+    elif library[title]["availability"]:
+        return 'Книга доступна'
+    else:
+        return 'Книга выдана'
+
+
+def print_info_of_book(title):
+    print(f'\nКнига: "{title}"\t'
+          f'Автор: {library[title]["author"]}\t'
+          f'Год издания: {library[title]["year"]}\t'
+          f'Статус: {status_of_book(title)}')
+
+
+def find_book():
+    system('cls||clear')
+    print('\nРаздел поиска книги в каталоге\n')
+    title = input('Введите название книги:\n')
+    if title in library.keys():
+        print_info_of_book(title)
+        input('\nДля продолжения работы нажмите ввод (enter)\n')
+        issue_and_return_book(title)
+
     else:
         print(f'\nКниги с названием "{title}" в каталоге нет!\n')
         input('Для продолжения работы нажмите ввод (enter)\n')
@@ -102,11 +110,11 @@ def add_book(info_book):
     if title in library.keys():
         choice = choice_of_answer(add_book_query, aad_book_action)
         if choice == '3':
-            find_book(title, True)
-            input('Для продолжения работы нажмите ввод (enter)\n')
-            return add_book([title, author, year])
+            print_info_of_book(title)
+            input('\nДля продолжения работы нажмите ввод (enter)\n')
+            return add_book(info_book)
         elif choice == '1':
-            library[title] = {'author': author, 'year': year, 'availability': None}
+            library[title] = {'author': author, 'year': year}
             print(f'\nИнформация о книге с названием "{title}" обновлена!\n')
             input('Для продолжения работы нажмите ввод (enter)\n')
         elif choice == '2':
@@ -135,7 +143,7 @@ def library_catalog_view():
     system('cls||clear')
     print(f'\nПросмотр каталога книг')
     for book_name in library.keys():
-        find_book(book_name, True)
+        print_info_of_book(book_name)
     print(f'\nКниг в каталоге:{len(library)} шт.\n')
     input('Для продолжения работы нажмите ввод (enter)\n')
 
@@ -149,7 +157,7 @@ def library_management():
     elif choice == '2':
         remove_book()
     elif choice == '3':
-        find_book('', False)
+        find_book()
     elif choice == '4':
         library_catalog_view()
     elif choice == '5':
